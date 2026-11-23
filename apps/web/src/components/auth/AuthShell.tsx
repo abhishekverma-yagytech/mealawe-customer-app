@@ -1,4 +1,5 @@
 import { Leaf, Truck, UtensilsCrossed } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
@@ -24,8 +25,7 @@ export function AuthShell({ title, subtitle, notice, children, skipHref = '/home
       <section className="flex flex-1 flex-col justify-center px-6 pb-8 pt-12 text-center lg:px-16 lg:pb-12 lg:pt-12 lg:text-left">
         <div className="mx-auto w-full max-w-md lg:mx-0 lg:max-w-xl">
           <Link href="/home" aria-label="Mealawe — home" className="inline-block">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/mealawe-logo-dark.png" alt="Mealawe" width={1956} height={450} className="mx-auto h-12 w-auto sm:h-14 lg:mx-0 lg:h-16" />
+            <Image src="/brand/mealawe-logo-dark.png" alt="Mealawe" width={278} height={64} loading="eager" className="mx-auto h-12 w-auto sm:h-14 lg:mx-0 lg:h-16" />
           </Link>
           <h1 className="mt-5 text-3xl font-black leading-tight sm:text-4xl lg:mt-10 lg:text-5xl">
             Fresh home-style meals,<br className="hidden lg:block" /> <span className="text-secondary">delivered daily.</span>

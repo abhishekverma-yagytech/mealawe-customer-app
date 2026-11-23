@@ -1,6 +1,6 @@
 'use client';
 
-import { DotLottieReact, setWasmUrl } from '@lottiefiles/dotlottie-react';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { ENDPOINTS, http, imageUri } from '@mealawe/core';
@@ -9,8 +9,8 @@ import { useClusterStore } from '@mealawe/state';
 import { cn } from '@/lib/cn';
 import { ENV } from '@/lib/env';
 
-// Self-hosted player runtime (no third-party CDN request).
-setWasmUrl('/lottie/dotlottie-player.wasm');
+// Player + WASM load after hydration, off the critical path; the band keeps its height meanwhile (no layout shift).
+const LottiePlayer = dynamic(() => import('./LottiePlayer'), { ssr: false });
 
 /** Apartment has one dashboard slot per order type (same keys as mobile's tabTheme). */
 export type HeroTab = 'subscription' | 'bulk' | 'dinein' | 'ondemand' | 'apartment_instant' | 'apartment_today' | 'apartment_advance';
@@ -93,7 +93,7 @@ export function LottieHero({ tab }: { tab: HeroTab }) {
   return (
     <section aria-label="Offers" className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-dark via-primary to-primary-dark">
       <div className="h-36 sm:h-48 lg:h-60">
-        {current ? <DotLottieReact key={current} src={current} loop autoplay={!reduced} layout={{ fit: 'cover', align: [0.5, 0.5] }} className="h-full w-full" /> : null}
+        {current ? <LottiePlayer key={current} src={current} autoplay={!reduced} /> : null}
       </div>
       {sources.length > 1 ? (
         <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5" role="tablist" aria-label="Slides">

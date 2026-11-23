@@ -4,13 +4,12 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { formatINR } from '@mealawe/core';
 
-import { Dialog } from '@/components/ui/Dialog';
 import { Button } from '@/components/ui/Button';
+import { Dialog } from '@/components/ui/Dialog';
 import { DietMark } from '@/components/ui/DietMark';
 import { QuantityStepper } from '@/components/ui/QuantityStepper';
-import { Img } from '@/lib/img';
-import { loadApartmentConfig, type ApartmentConfig } from '@/features/apartment/config';
 import { useApartmentCartStore } from '@/features/apartment/cartStore';
+import { loadApartmentConfig, type ApartmentConfig } from '@/features/apartment/config';
 import {
   DEFAULT_INSTANT_PREP_MINUTES,
   autoPickInstantOffer,
@@ -25,6 +24,7 @@ import {
   mealOrderFrom,
 } from '@/features/apartment/pricing';
 import type { ApartmentDish, ApartmentDishOffer, OrderType } from '@/features/apartment/types';
+import { Img } from '@/lib/img';
 
 interface Props {
   dish: ApartmentDish | null;

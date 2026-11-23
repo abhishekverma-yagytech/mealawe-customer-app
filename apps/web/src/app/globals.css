@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 
-@font-face { font-family: 'Metropolis'; font-weight: 400; font-display: swap; src: url('/fonts/Metropolis-Regular.ttf') format('truetype'); }
-@font-face { font-family: 'Metropolis'; font-weight: 700; font-display: swap; src: url('/fonts/Metropolis-Bold.ttf') format('truetype'); }
-@font-face { font-family: 'Metropolis'; font-weight: 900; font-display: swap; src: url('/fonts/Metropolis-Black.ttf') format('truetype'); }
+/* Metropolis is loaded by next/font/local in app/layout.tsx (woff2, preloaded, size-adjusted fallback) → --font-metropolis. */
 
 /*
  * Tokens mirror @mealawe/design-tokens (palette.ts / theme.ts) — keep in sync.
@@ -63,7 +61,7 @@
   --color-veg: #63ab45;
   --color-nonveg: #e23744;
   --color-rating: #f5a623;
-  --font-sans: 'Metropolis', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-metropolis), ui-sans-serif, system-ui, sans-serif;
   --radius-card: 16px;
 }
 

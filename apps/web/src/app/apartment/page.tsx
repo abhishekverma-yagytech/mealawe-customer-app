@@ -17,13 +17,13 @@ import { Button } from '@/components/ui/Button';
 import { CartBar } from '@/components/ui/CartBar';
 import { DietMark } from '@/components/ui/DietMark';
 import { Skeleton } from '@/components/ui/Skeleton';
-import { loadApartmentCatalog, type ApartmentCatalogFilters } from '@/features/apartment/catalog';
 import { useApartmentCartStore } from '@/features/apartment/cartStore';
+import { loadApartmentCatalog, type ApartmentCatalogFilters } from '@/features/apartment/catalog';
 import { useApartmentEligibilityStore, useApartmentOrderTypeStore } from '@/features/apartment/eligibility';
 import { ORDER_TYPES, ORDER_TYPE_LABEL, cheapestOfferFor, currentMealType, isDishBlocked, mealOrderFrom } from '@/features/apartment/pricing';
 import type { ApartmentDish, MealType, OrderType } from '@/features/apartment/types';
-import { Img } from '@/lib/img';
 import { cn } from '@/lib/cn';
+import { Img } from '@/lib/img';
 import { useLoginGate } from '@/lib/useLoginGate';
 
 const TAGLINE: Record<OrderType, string> = {

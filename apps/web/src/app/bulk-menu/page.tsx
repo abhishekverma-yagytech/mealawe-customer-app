@@ -14,11 +14,11 @@ import { CartBar } from '@/components/ui/CartBar';
 import { Dialog } from '@/components/ui/Dialog';
 import { DietMark } from '@/components/ui/DietMark';
 import { QuantityStepper } from '@/components/ui/QuantityStepper';
-import { useLoginGate } from '@/lib/useLoginGate';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/cn';
 import { ENV } from '@/lib/env';
 import { Img } from '@/lib/img';
+import { useLoginGate } from '@/lib/useLoginGate';
 
 const TITLES: Record<BulkCategory, string> = { meals: 'Bulk Meals', snacks: 'Bulk Snacks', foodbox: 'Food Box' };
 const VALID: BulkCategory[] = ['meals', 'snacks', 'foodbox'];

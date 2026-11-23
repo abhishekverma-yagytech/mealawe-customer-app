@@ -7,6 +7,9 @@ Mirrors the mobile app's routes and flow (same paths/query params as `apps/mobil
 ## Run
 - `cp .env.example .env.local` and fill `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_API_SECRET_KEY`, `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` (referrer-restricted key).
 - `npm run dev --workspace @mealawe/web` · build: `npm run build --workspace @mealawe/web`
+- Bundle size: `npm run analyze --workspace @mealawe/web` = webpack build + `@next/bundle-analyzer` treemaps (`.next/analyze/client.html`)
+  + first-load JS per route (`scripts/route-sizes.mjs`; Next 16 no longer prints it). After a normal (Turbopack) build run `npm run
+  route-sizes`; `npm run analyze:turbo` opens Turbopack's own analyzer. `route-sizes -- --budget=300` fails if a route exceeds 300 kB gzip.
 - `/dev/smoke` proves the browser↔API AES round-trip (run it first against staging).
 
 ## Architecture
@@ -17,7 +20,13 @@ Mirrors the mobile app's routes and flow (same paths/query params as `apps/mobil
 - All data fetching is **client-side** (shared stores/caches are module singletons — never fetch or read user state during SSR).
 - Pages are thin: logic lives in `@mealawe/*` (billing: `buildBill`/`buildBulkBill`/`buildOnDemandBill`; stores; hooks).
 - UI: Tailwind v4 theme in `src/app/globals.css` (mirrors `@mealawe/design-tokens`), Radix dialogs replace mobile bottom sheets.
+- Fonts: Metropolis woff2 in `src/app/fonts/`, loaded by `next/font/local` in `app/layout.tsx` (`--font-metropolis`); no `@font-face` in CSS.
+- CLS: loading skeletons must match the real component's box (see `FeaturedSkeleton`/`TileSkeleton` in `SubscriptionHome.tsx`).
+  Lighthouse numbers only mean something on `npm run build && npm start`, never `next dev`.
 - Pages using `useSearchParams` must be wrapped in `<Suspense>`; `useRequireLogin` avoids it on purpose.
+- Images: always `next/image` — backend photos via `<Img sizes=…>` (`lib/img.tsx`), local `/public` assets via `<Image>` with the
+  rendered width/height. Optimized hosts = API host + `NEXT_PUBLIC_IMAGE_HOSTS` (`lib/image-hosts.ts`, shared with `next.config.ts`);
+  other hosts, private IPs and blob: previews fall back to `unoptimized` instead of a 400.
 
 ## Not in V1
 Navmool marketplace checkout, push, Netcore/Branch SDKs, reschedule/cancel order actions, hero Lottie/video

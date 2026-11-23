@@ -12,13 +12,13 @@ import { useAuthStore, useVegModeStore } from '@mealawe/state';
 
 import { BottomNav } from '@/components/layout/BottomNav';
 import { Page, PageHeader } from '@/components/layout/PageHeader';
+import { ThemeSegmented } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Dialog } from '@/components/ui/Dialog';
+import { Switch } from '@/components/ui/Switch';
 import { Img } from '@/lib/img';
 import { signOut } from '@/lib/session';
-import { Switch } from '@/components/ui/Switch';
-import { ThemeSegmented } from '@/components/ThemeToggle';
 
 const MENU = [
   { href: '/addresses', label: 'Saved addresses' },

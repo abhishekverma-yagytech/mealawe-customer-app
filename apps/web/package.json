@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "analyze": "next build --webpack && node scripts/route-sizes.mjs",
+    "analyze:turbo": "next analyze",
+    "route-sizes": "node scripts/route-sizes.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
@@ -36,6 +39,7 @@
   },
   "devDependencies": {
     "@mealawe/config": "*",
+    "@next/bundle-analyzer": "^16.4.6",
     "@tailwindcss/postcss": "^4.2.0",
     "@types/google.maps": "^3.67.0",
     "@types/node": "^22.0.0",

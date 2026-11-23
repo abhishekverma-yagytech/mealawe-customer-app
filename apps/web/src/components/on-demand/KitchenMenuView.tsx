@@ -3,7 +3,7 @@
 import { Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { groupMenuByMode, itemStatusFor, loadOrderingWindows, formatINR, trackProductView, type ItemStatus, type OnDemandKitchen, type OnDemandMenuItem, type OnDemandMode, type OrderingWindows } from '@mealawe/core';
+import { formatINR, groupMenuByMode, itemStatusFor, loadOrderingWindows, trackProductView, type ItemStatus, type OnDemandKitchen, type OnDemandMenuItem, type OnDemandMode, type OrderingWindows } from '@mealawe/core';
 import { useOnDemandCartStore, useVegModeStore } from '@mealawe/state';
 
 import { Button } from '@/components/ui/Button';
@@ -11,10 +11,10 @@ import { CartBar } from '@/components/ui/CartBar';
 import { Dialog } from '@/components/ui/Dialog';
 import { DietMark } from '@/components/ui/DietMark';
 import { QuantityStepper } from '@/components/ui/QuantityStepper';
-import { useLoginGate } from '@/lib/useLoginGate';
 import { cn } from '@/lib/cn';
-import { Img } from '@/lib/img';
 import { ENV } from '@/lib/env';
+import { Img } from '@/lib/img';
+import { useLoginGate } from '@/lib/useLoginGate';
 
 const STATUS_COPY: Record<ItemStatus, string | null> = {
   available: null,
