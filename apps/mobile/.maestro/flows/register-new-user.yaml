@@ -1,0 +1,13 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires a verified OTP session to reach /register (see login-otp-flow.yaml)
+# This flow assumes it starts already on the Register screen.
+- assertVisible: "Almost there"
+- assertVisible: "Tell us a bit about you"
+- tapOn: "Your full name"
+- inputText: "Test User"
+- tapOn: "you@example.com"
+- inputText: "test.user@example.com"
+- tapOn: "Confirm"
+# Lands on (tabs) home — no bottom tab bar, subscription feed by default.
+- assertVisible: "Categories"

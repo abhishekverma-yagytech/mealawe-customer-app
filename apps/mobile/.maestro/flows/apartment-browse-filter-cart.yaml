@@ -1,0 +1,72 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml) and a
+# delivery address resolving to an apartment complex with at least one
+# eligible kitchen (Apartment's floating tab pill is hidden entirely — see
+# HomeBottomNav's apartmentVisible prop — until useApartmentEligibilityStore
+# resolves non-null for the current address, so this flow cannot even start
+# from an unserviceable location). Assumes app is already on (tabs) home.
+#
+# Bug fix: "Categories" (copied from other flows' own "confirm we're on
+# Home" convention) no longer appears anywhere on Home — confirmed live,
+# this assertion fails on the CURRENT app before ever reaching apartment
+# code. "Meals for you" is the section header actually on screen now.
+- assertVisible: "Meals for you"
+- tapOn: "Apartment"
+# Apartment's own content (ApartmentHome) shares the home hero/header — no
+# separate screen title — so the category-pill row + filter button below are
+# what confirm we actually landed here rather than staying on another feed tab.
+- assertVisible: "Filters"
+
+# --- Filter modal: exercise every field, then clear ---
+- tapOn: "Filters"
+- assertVisible: "Refine your menu"
+- tapOn: "Veg"
+- tapOn: "Non-Veg"
+- tapOn: "Delivery"
+- tapOn: "Self-pickup"
+# "Clear" resets every field AND closes the popup in one tap (product
+# instruction — see ApartmentHome.tsx's clearFilters comment), unlike the
+# reference design's own prototype which left it open.
+- tapOn: "Clear"
+- assertNotVisible: "Refine your menu"
+
+# --- Search ---
+# The search box has no testID and no native placeholder (a custom animated
+# overlay owns that job — see ApartmentHome.tsx's own comment — so its text
+# cycles through real dish names and can't be a fixed selector target
+# either). Targeted positionally, immediately left of the Filters button in
+# the same row, same "no static selector on this element" convention
+# cart-bill-summary-tree-and-swap.yaml's own PlanCard note documents.
+- tapOn:
+    leftOf: "Filters"
+# Bug fix: matches a real dish this catalog actually carries (confirmed
+# live — "Aamras") rather than a generic guess ("maggi") that could just as
+# easily match nothing, which would fail the next step for an unrelated
+# reason (no results, not a real bug).
+- inputText: "aam"
+# Bug fix: `hideKeyboard` reproduced 100% of the time on-device as a full
+# app backgrounding (kicked to the phone's home launcher) — confirmed via
+# logcat this is Maestro's own on-device driver reinstalling itself right
+# at that step, not an app crash (`com.mealawe.app`'s own process never
+# died). Tapping a neutral area of the screen dismisses the keyboard the
+# same way a real resident would, without invoking that command.
+- tapOn:
+    point: "50%, 15%"
+
+# --- Open a dish's add-sheet, add it to cart, then check out ---
+# No static per-dish selector exists (dish names are catalog data, exactly
+# the same "dynamic text has no fixed target" gap cart-bill-summary-tree-and
+# -swap.yaml's own PlanCard note documents) — matched positionally instead.
+# Bug fix: this app has no direct-add shortcut on the grid card itself
+# (ApartmentDishCard.tsx's own comment: reverted deliberately — every first
+# add goes through the full add-sheet, kitchen picked there) — the card's
+# own CTA reads "View more", not "Add".
+- tapOn:
+    text: "View more"
+    index: 0
+- tapOn: "Add to order"
+- assertVisible: "View order"
+- tapOn: "View order"
+- assertVisible: "Bill details"
+- assertVisible: "To pay"

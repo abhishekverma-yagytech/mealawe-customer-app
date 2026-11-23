@@ -1,0 +1,23 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session + a serviceable Kota cluster
+# (showDineIn=true; Dine In only shows there — see HOME-02) with at least one
+# real DineInPackage from the backend (staging's Kota cluster already has 7,
+# cloned from production).
+- assertVisible: "Categories"
+- tapOn: "Dine In"
+- assertVisible: "No delivery charges — dine in at the venue"
+# A package is auto-selected on load (DINEIN-03) — the sticky bar is already
+# showing "Continue", no card tap needed to reach it.
+- assertVisible: "Continue"
+- tapOn: "Continue"
+- assertVisible: "Dine In · "
+# Meal time is read-only text on Configure for every flow now (chosen earlier
+# on the Plan screen for Subscription) — DineInHome never sets lunch/dinner in
+# its configure context, so this always defaults to and displays "Lunch",
+# non-adjustable (the "Change" link back to Plan is hidden for isDineIn). No
+# tap here — there is nothing to toggle.
+- assertVisible: "Lunch"
+- tapOn: "Review & pay"
+- assertVisible: "Dine-in"
+- assertNotVisible: "Address"

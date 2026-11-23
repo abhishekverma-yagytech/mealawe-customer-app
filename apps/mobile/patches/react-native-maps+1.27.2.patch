@@ -1,0 +1,20 @@
+diff --git a/node_modules/react-native-maps/android/src/main/java/com/rnmaps/maps/MapMarker.java b/node_modules/react-native-maps/android/src/main/java/com/rnmaps/maps/MapMarker.java
+index 3e0250f..a88a68a 100644
+--- a/node_modules/react-native-maps/android/src/main/java/com/rnmaps/maps/MapMarker.java
++++ b/node_modules/react-native-maps/android/src/main/java/com/rnmaps/maps/MapMarker.java
+@@ -357,6 +357,15 @@ public class MapMarker extends MapFeature {
+     }
+ 
+     public LatLng interpolate(float fraction, LatLng a, LatLng b) {
++        // Guard against a race where the underlying Marker is torn down (view
++        // unmounted / removed from the map) while an animateMarkerToCoordinate
++        // glide is still in flight — the ObjectAnimator keeps firing frames on
++        // the Choreographer after teardown, and the Marker's position getter
++        // can come back null, crashing with an NPE reading a.latitude/b.latitude
++        // on the next animation frame.
++        if (a == null || b == null) {
++            return b != null ? b : a;
++        }
+         double lat = (b.latitude - a.latitude) * fraction + a.latitude;
+         double lng = (b.longitude - a.longitude) * fraction + a.longitude;
+         return new LatLng(lat, lng);

@@ -1,0 +1,13 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml) and a
+# delivery address resolving to a cluster with showNavmool=true.
+# CURRENTLY UNRUNNABLE: the Navmool tab push in (tabs)/index.tsx's `orderTabs`
+# is commented out ("disabled for now... restore by uncommenting once Navmool
+# is ready to ship again") regardless of showNavmool — there is no "Navmool"
+# shortcut to tap today. Re-enable that block before running this flow again.
+- assertVisible: "Categories"
+- tapOn: "Navmool"
+- assertVisible: "Navmool — coming soon"
+- back
+- assertVisible: "Categories" # back on home

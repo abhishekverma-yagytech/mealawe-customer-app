@@ -1,0 +1,21 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml) and support
+# contacts/FAQs configured on the backend (getVariables / getUserFAQ) to populate
+# ContactAction buttons and the FAQ list.
+- assertVisible: "Categories"
+- tapOn: "Open profile"
+- assertVisible: "Help & support"
+- tapOn: "Help & support"
+- assertVisible: "We're here to help. Reach us any way you like."
+# FAQ rows only render if the backend returns any FAQs — skipped here since presence
+# is data-dependent; see FAQ expand/collapse as a separate manual check if needed.
+- back # native Stack header back arrow → Profile
+- tapOn: "Feedback"
+- assertVisible: "What's on your mind?"
+- tapOn: "Praise"
+- tapOn: "Share your thoughts, ideas or concerns…"
+- inputText: "Loving the new subscription flow!"
+- tapOn: "Submit feedback"
+- assertVisible: "Thank you!"
+- tapOn: "OK"

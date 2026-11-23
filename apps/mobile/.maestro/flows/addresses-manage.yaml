@@ -1,0 +1,28 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml).
+- assertVisible: "Categories" # confirms we're on authenticated home
+# HomeHeader's address Pressable has no visible label text of its own besides the
+# dynamic address string, but its accessibilityLabel ("Change delivery address") is
+# exposed as Android contentDescription — Maestro's tapOn matches against it directly.
+- tapOn: "Change delivery address"
+- assertVisible: "Delivery address"
+# Inline "search a location to check availability" — resolves to a real
+# Google Places autocomplete + serviceability check, so stop right after it
+# opens rather than scripting a specific place result (network-dependent,
+# same "stop at the external boundary" convention as JusPay in cart flows).
+- assertVisible: "Search a location to check availability"
+- tapOn: "Search a location to check availability"
+- assertVisible: "Search area, street, landmark…"
+# InlineLocationSearch has no close affordance of its own (no modal/back to
+# dismiss) — "+ Add new address" is a separate, always-rendered row further
+# down the same scroll view, so continue straight to it.
+- assertVisible: "+ Add new address"
+- tapOn: "+ Add new address"
+- assertVisible: "Add address"
+- assertVisible: "Flat / House / Street"
+- tapOn: "e.g. B-402, Green Residency"
+- inputText: "B-402, Green Residency"
+- tapOn: "Save address"
+- assertVisible: "Delivery address"
+- assertVisible: "Saved addresses"

@@ -1,0 +1,1 @@
+export { addonKey, addonLineTotal, extraAddonDays, daysLabel, finalPrice, offPercent, perDay, originalPerDay, cheapestPlan, cheapestPriceLabels, pickDefaultPackage, planTag, aiRecommendationCopy } from '@mealawe/core';

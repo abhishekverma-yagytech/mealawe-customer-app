@@ -1,0 +1,53 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires authenticated session + a non-Kota serviceable location (Kota
+# clusters get "Dine In" instead of "Bulk") + at least one bulk menu item available.
+- assertVisible: "Bulk"
+- tapOn: "Bulk"
+- assertVisible: "Order in bulk"
+- tapOn: "Bulk Meals"
+- assertVisible: "Bulk Meals"
+- assertVisible: "Individual"
+- assertVisible: "Bulk"
+# Diet filter chips (BULK-03/BULK-16) — assert presence, then toggle the
+# filter on and off before continuing with the full (unfiltered) list for
+# the rest of this flow. Anchored regex avoids matching "Non-Veg", which
+# also contains the substring "Veg".
+- assertVisible: "^Veg$"
+- assertVisible: "Non-Veg"
+- tapOn: "^Veg$"
+- tapOn: "^Veg$"
+# Item quantity steppers carry a per-item accessibility label — match by regex
+# since item names are dynamic menu data.
+- tapOn: "Increase.*quantity"
+- tapOn: "Increase.*quantity"
+- assertVisible: "View cart →"
+- tapOn: "View cart →"
+- assertVisible: "Bulk cart"
+- assertVisible: "Pick a delivery date and slot"
+- assertVisible: "Place order"
+# Bill breakdown is always visible now — reachable with no "Total Bill" tap
+# (the collapse/chevron toggle was removed) (BULK-13).
+- assertVisible: "To pay"
+# Cart line's own stepper now steps by 10 above MOQ via the shared
+# nextCountFor(), same as Bulk Menu's stepper (BULK-20).
+- tapOn: "Increase.*quantity"
+- tapOn: "Decrease.*quantity"
+# "Add more items" returns to the menu for this cart's own category,
+# preserving context instead of dead-ending the cart (BULK-19).
+- assertVisible: "Add more items"
+- tapOn: "Add more items"
+- assertVisible: "Bulk Meals"
+- back # bulk-menu (Bulk Meals) pushed by "Add more items"
+- back # bulk-cart
+- back # bulk-menu (Bulk Meals) — "Bulk" here is the packaging toggle, not the home tab
+- back # home, Bulk tab
+# Switching category with existing cart lines must warn before wiping them
+# (see BULK-06 / E2E-38) — pick a different category from the Bulk tab.
+- assertVisible: "Order in bulk"
+- tapOn: "Bulk Snacks"
+- assertVisible: "Bulk Snacks"
+- tapOn: "Increase.*quantity"
+- assertVisible: "Switch category?"
+- assertVisible: "Adding an item here will clear your current bulk cart."
+- tapOn: "Switch"

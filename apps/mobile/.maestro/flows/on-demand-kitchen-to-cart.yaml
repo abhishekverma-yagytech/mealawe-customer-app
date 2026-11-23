@@ -1,0 +1,30 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml) and a
+# delivery address resolving to a cluster with showOndemand=true, with at least
+# one on-demand kitchen serviceable there.
+- assertVisible: "Categories"
+- tapOn: "On Demand"
+- tapOn: "View menu"
+- assertVisible: "Daily"
+- tapOn: "Increase.*quantity"
+- assertVisible: "View cart →"
+- tapOn: "View cart →"
+- assertVisible: "Cart"
+- assertVisible: "To pay"
+# Kitchen summary row offers a "Change" link back to the kitchen list for the
+# cart's current mode, instead of dead-ending on this one kitchen (OD-15).
+- assertVisible: "Change"
+- tapOn: "Change"
+- assertVisible: "Daily Order"
+- back # on-demand-kitchens -> on-demand-cart
+# "Add something else" returns to this same kitchen's menu (same
+# kitchenId/mode), preserving context instead of losing the cart (OD-16).
+- assertVisible: "Add something else"
+- tapOn: "Add something else"
+- assertVisible: "Daily"
+- back # on-demand-kitchen -> on-demand-cart
+- assertVisible: "Pay now"
+- back # on-demand-cart -> on-demand-kitchen (the original menu)
+- back # on-demand-kitchen -> home, On Demand tab
+- assertVisible: "Categories"

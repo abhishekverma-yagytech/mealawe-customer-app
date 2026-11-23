@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Mealawe RN Migration Plan</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    color: #16232b; font-size: 10.5pt; line-height: 1.5; margin: 0;
+  }
+  h1, h2, h3 { color: #2b5717; line-height: 1.2; }
+  h1 { font-size: 20pt; margin: 0 0 2pt; }
+  h2 {
+    font-size: 14pt; margin: 22pt 0 6pt; padding-bottom: 4pt;
+    border-bottom: 2px solid #63ab45; break-after: avoid;
+  }
+  h3 { font-size: 11.5pt; margin: 12pt 0 4pt; color: #518937; break-after: avoid; }
+  p { margin: 5pt 0; }
+  a { color: #518937; text-decoration: none; }
+  ul { margin: 5pt 0; padding-left: 16pt; }
+  li { margin: 2.5pt 0; }
+  strong { color: #042a33; }
+  code {
+    font-family: "Cascadia Code", Consolas, monospace; font-size: 9pt;
+    background: #f2f5ef; padding: 1px 4px; border-radius: 3px; color: #2b5717;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 8pt 0; font-size: 9.6pt; }
+  th, td { text-align: left; padding: 5pt 8pt; border-bottom: 1px solid #e2e6df; vertical-align: top; }
+  th { background: #eef6ea; color: #2b5717; font-weight: 700; border-bottom: 1.5px solid #63ab45; }
+  .badge {
+    display: inline-block; font-size: 8pt; font-weight: 700; padding: 1px 7px;
+    border-radius: 10px; vertical-align: middle; letter-spacing: .3px;
+  }
+  .done { background: #d6ebcc; color: #2b5717; }
+  .wip  { background: #fff0c2; color: #7a5c00; }
+  .plan { background: #e7ebe9; color: #55605a; }
+  .phase { break-inside: avoid; }
+  .lead { color: #55605a; font-size: 10pt; }
+  .legend span { margin-right: 14pt; }
+
+  .cover { height: 260mm; display: flex; flex-direction: column; justify-content: center;
+           break-after: page; }
+  .cover .bar { height: 10px; width: 120px; background: #63ab45; border-radius: 6px; margin-bottom: 26pt; }
+  .cover h1 { font-size: 32pt; color: #042a33; margin: 0 0 8pt; line-height: 1.1; }
+  .cover .sub { font-size: 13pt; color: #518937; font-weight: 600; }
+  .cover .meta { margin-top: 30pt; font-size: 10pt; color: #55605a; }
+  .cover .meta div { margin: 3pt 0; }
+  .accent { color: #63ab45; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="bar"></div>
+  <h1>Mealawe User App<br /><span class="accent">React Native Migration Plan</span></h1>
+  <div class="sub">A phased rebuild of the Mealawe customer app on React Native + Expo</div>
+  <div class="meta">
+    <div><strong>Project</strong> &middot; MealaweUserAppRN</div>
+    <div><strong>Platforms</strong> &middot; Android &amp; iOS (com.mealawe.app)</div>
+    <div><strong>Reference</strong> &middot; MealaweUserApp (Ionic 7) &amp; mealaweApp (Ionic 8)</div>
+    <div><strong>Date</strong> &middot; July 2026</div>
+  </div>
+</section>
+
+<h1>Overview</h1>
+<p class="lead">A ground-up rebuild of the Mealawe customer app on a single modern React
+Native codebase, wired to the live Mealawe backend, shipping every ordering vertical without
+regressing behaviour. Behaviour follows <strong>MealaweUserApp</strong> (Angular 16 / Ionic 7);
+ported logic references the cleaned-up <strong>mealaweApp</strong> (Ionic 8).</p>
+
+<h3>Stack &amp; foundations</h3>
+<table>
+  <tr><th>Area</th><th>Choice</th></tr>
+  <tr><td>Runtime</td><td>Expo SDK 57 &middot; React Native 0.86 &middot; React 19.2</td></tr>
+  <tr><td>Language</td><td>TypeScript (strict)</td></tr>
+  <tr><td>Navigation</td><td>Expo Router (file-based, typed routes)</td></tr>
+  <tr><td>Styling</td><td>NativeWind v5 + Tailwind v4 &middot; Gluestack UI v5</td></tr>
+  <tr><td>State</td><td>Zustand (auth, location, theme)</td></tr>
+  <tr><td>Storage</td><td>expo-secure-store (secrets) + react-native-mmkv (fast KV)</td></tr>
+  <tr><td>Maps</td><td>react-native-maps + Google Places / Geocoding</td></tr>
+  <tr><td>Icons / Motion</td><td>lucide-react-native &middot; lottie-react-native &middot; Reanimated</td></tr>
+  <tr><td>Build &amp; OTA</td><td>EAS Build + EAS Update</td></tr>
+</table>
+<p class="lead" style="background:#f2f5ef;border-left:3px solid #63ab45;padding:7pt 10pt;border-radius:0 6px 6px 0;">
+  <strong>Dependencies are added incrementally.</strong> The table above is the current
+  foundation, not a fixed allow-list. Each phase pulls in only the libraries it needs when it
+  starts (e.g. payment SDKs for the cart phases, charts / date pickers where a screen needs
+  them), preferring an Expo-compatible, well-maintained package and keeping the bundle lean.
+</p>
+<p class="legend"><strong>Status:</strong>
+  <span class="badge done">DONE</span>
+  <span class="badge wip">IN PROGRESS</span>
+  <span class="badge plan">PLANNED</span>
+</p>
+
+<h2>Phase 1 &mdash; Foundation <span class="badge done">DONE</span></h2>
+<div class="phase">
+<p>Establish the shared platform every feature builds on.</p>
+<ul>
+  <li><strong>Project structure</strong> &mdash; feature-first folders under <code>src/features/&lt;domain&gt;</code>, shared UI in <code>src/components/ui</code>, services in <code>src/services</code>, state in <code>src/store</code>.</li>
+  <li><strong>Design system</strong> &mdash; brand tokens (green, yellow, cream, teal), the <code>AppText</code> Lato typography primitive, a Lucide icon set; documented in DESIGN.md.</li>
+  <li><strong>Theming</strong> &mdash; light / dark / system with a persisted preference applied through React Native Appearance; switchable from the profile. Defaults to system.</li>
+  <li><strong>API transport &amp; encryption</strong> &mdash; a fetch client porting the Ionic AES <code>session_x</code> scheme: every request body encrypted to <code>{ data_key }</code>, every response decrypted with a per-request key.</li>
+  <li><strong>Storage</strong> &mdash; encrypted secure store for session + profile; MMKV for fast state (address, theme, drafts).</li>
+  <li><strong>Auth state</strong> &mdash; a Zustand store hydrating on boot, exposing the token to the HTTP client, driving the routing gate.</li>
+  <li><strong>Routing</strong> &mdash; Expo Router with a boot gate and typed routes.</li>
+  <li><strong>EAS baseline</strong> &mdash; eas.json, project linked, runtime versioning + OTA channel.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> app boots, encrypted requests succeed, session &amp; theme persist, typecheck and Android export green.</p>
+</div>
+
+<h2>Phase 2 &mdash; Onboarding &amp; Authentication <span class="badge done">DONE</span></h2>
+<div class="phase">
+<ul>
+  <li><strong>Welcome</strong> &mdash; three-slide onboarding carousel.</li>
+  <li><strong>Login</strong> &mdash; phone &rarr; 6-box OTP &rarr; verify (registerPhoneNo / resendOTP / verifyOTP); stores session and fetches profile.</li>
+  <li><strong>Register</strong> &mdash; name, email, referral, with referral-code validation.</li>
+  <li><strong>Boot gate</strong> &mdash; routes by session state: welcome &rarr; login &rarr; home.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> new and returning users complete the flow end-to-end on device.</p>
+</div>
+
+<h2>Phase 3 &mdash; Home, Location &amp; Profile <span class="badge done">DONE</span></h2>
+<div class="phase">
+<ul>
+  <li><strong>Immersive home header</strong> &mdash; Lottie hero carousel behind a floating header (address, cashback pill, profile), order-mode tabs with a VEG toggle, story-style auto-advancing progress, content sheet overlapping the hero.</li>
+  <li><strong>Location &amp; address</strong> &mdash; GPS + reverse geocoding, a map picker with a draggable pin and Google Places autocomplete, 500 m saved-address matching, add / edit / delete, and backend sync of the current location.</li>
+  <li><strong>Profile</strong> &mdash; customer details with edit; wallet (Mealawe Money) and cashback balances + history; Help &amp; support (chat / call / email + FAQ); Feedback; theme selector; branded sign-out.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> address selection updates home context; wallet, cashback, help, feedback call live endpoints.</p>
+</div>
+
+<h2>Phase 3.5 &mdash; EAS: Staging <span class="badge done">DONE</span></h2>
+<div class="phase">
+<ul>
+  <li><strong>development</strong> &mdash; staging environment, dev-client, internal APK.</li>
+  <li><strong>staging</strong> &mdash; staging environment, release APK for internal QA.</li>
+  <li>Each profile injects <code>EXPO_PUBLIC_ENV</code>; remote app-version source with auto-increment.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> a staging build installs on internal testers' devices and points at the staging backend.</p>
+</div>
+
+<h2>Shared building blocks for the ordering verticals</h2>
+<p>Phases 4&ndash;9 each deliver one ordering vertical over the same spine, built once and reused.
+Each vertical layers its own catalogue and business rules on top.</p>
+<ul>
+  <li><strong>Vertical home</strong> &mdash; hero / banners, coupons, entry into the menu.</li>
+  <li><strong>Catalogue &amp; menu</strong> &mdash; items, weekly menu where applicable, cluster-wise (serviceable-area) availability, and categories.</li>
+  <li><strong>Cart &amp; pricing engine</strong> &mdash; one tested calculation module: item totals, add-ons, GST, delivery, packaging, platform fees, coupons, and wallet / cashback redemption. Bill math mirrors the Ionic tabCart per vertical.</li>
+  <li><strong>Payments</strong> &mdash; one service with both live gateways (JusPay HyperSDK, Paytm All-in-One) switched by config, plus order creation and payment validation.</li>
+  <li><strong>Orders</strong> &mdash; parent order &rarr; child orders &rarr; daily orders, each with live status and a delivery map where relevant.</li>
+</ul>
+<p class="lead"><strong>Acceptance (per vertical):</strong> browse &rarr; add to cart &rarr; correct bill &rarr; pay &rarr; order created &rarr; track status.</p>
+
+<h2>Phase 4 &mdash; Subscription <span class="badge wip">IN PROGRESS</span></h2>
+<div class="phase">
+<p>The flagship vertical, and the template for the rest.</p>
+<ul>
+  <li><strong>Subscription home</strong> &mdash; plans, banners, coupons.</li>
+  <li><strong>Menu</strong> &mdash; weekly menu, cluster-wise menu, categories.</li>
+  <li><strong>Configure</strong> &mdash; plan options and add-ons; dates, meal selection (lunch / dinner), delivery address.</li>
+  <li><strong>Cart</strong> &mdash; full bill (per-day &times; meals, GST, charges, coupons, wallet).</li>
+  <li><strong>Payments</strong> &mdash; JusPay / Paytm with order creation and validation.</li>
+  <li><strong>Orders</strong> &mdash; subscription parent &rarr; child &rarr; daily orders with delivery map and per-day status.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> a user can subscribe, pay, and track daily deliveries end-to-end.</p>
+</div>
+
+<h2>Phases 5&ndash;9 &mdash; Remaining verticals <span class="badge plan">PLANNED</span></h2>
+<div class="phase">
+<p>Each reuses the Phase 4 spine (home &middot; menu &middot; cart &middot; payments &middot; orders), specialised for its domain:</p>
+<table>
+  <tr><th>Phase</th><th>Vertical</th><th>Specialisation</th></tr>
+  <tr><td>5</td><td>Bulk</td><td>Bulk menu / food-box configuration, bulk cart &amp; pricing, bulk orders.</td></tr>
+  <tr><td>6</td><td>Daily Order</td><td>On-demand daily ordering with same-day tracking.</td></tr>
+  <tr><td>7</td><td>Dine-in</td><td>Dine-in home, kitchen / menu browsing, dine-in order status.</td></tr>
+  <tr><td>8</td><td>Navmool (Marketplace)</td><td>Kitchen &amp; item browsing, option sheets, marketplace orders.</td></tr>
+  <tr><td>9</td><td>Advance Order</td><td>Scheduled ordering with scheduled-order tracking.</td></tr>
+</table>
+</div>
+
+<h2>Phase 10 &mdash; Hardening &amp; Finalisation <span class="badge plan">PLANNED</span></h2>
+<div class="phase">
+<ul>
+  <li>Cross-vertical audit: cart / pricing edge cases, coupon + wallet + cashback interactions, empty / error / loading states, cluster &amp; serviceability conditions.</li>
+  <li>Accessibility, responsive layout, reduced-motion, and light / dark parity.</li>
+  <li>Performance pass: list virtualisation, image / animation weight, cold-start.</li>
+  <li>Feature-flag and cluster-condition verification against backend config.</li>
+  <li>QA sweep on real devices for each vertical's happy path and key edge cases.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> every vertical passes its happy path and priority edge cases on device.</p>
+</div>
+
+<h2>Phase 11 &mdash; EAS: Production + CI/CD <span class="badge plan">PLANNED</span></h2>
+<div class="phase">
+<ul>
+  <li><strong>Production build profile</strong> &mdash; production environment, store-ready Android App Bundle and iOS build, auto-incrementing version codes.</li>
+  <li><strong>Store submission</strong> &mdash; <code>eas submit</code> wired for Play Store (and App Store) with service credentials.</li>
+  <li><strong>CI/CD</strong> &mdash; on merge to the release branch: typecheck + build, trigger EAS builds per environment, publish EAS Updates (OTA) to the matching channel; staging auto-builds, production gated by approval.</li>
+  <li><strong>Release hygiene</strong> &mdash; versioning policy, changelog, rollback via EAS Update.</li>
+</ul>
+<p class="lead"><strong>Acceptance:</strong> a tagged release produces store artifacts and an OTA update through the pipeline with no manual build steps.</p>
+</div>
+
+<h2>Appendix</h2>
+<h3>Ordering-vertical checklist (Phases 4&ndash;9)</h3>
+<ul>
+  <li>Vertical home (hero, banners, coupons)</li>
+  <li>Menu: items &middot; weekly menu &middot; cluster-wise menu &middot; categories</li>
+  <li>Cart with full pricing (items, add-ons, GST, charges, coupons, wallet / cashback)</li>
+  <li>Payment gateway (JusPay / Paytm) + order creation + validation</li>
+  <li>Orders: parent &rarr; child &rarr; daily, with delivery map and live status</li>
+  <li>Empty / error / loading states and serviceability conditions</li>
+</ul>
+<h3>Key risks &amp; dependencies</h3>
+<ul>
+  <li><strong>Payment SDKs</strong> are native and gateway-specific &mdash; validate the native build early per gateway.</li>
+  <li><strong>Cluster / serviceability</strong> logic gates catalogue and tabs &mdash; port it faithfully.</li>
+  <li><strong>Bill math</strong> must match the backend to the paisa &mdash; reuse one engine and test it hard.</li>
+  <li><strong>Google &amp; Firebase keys</strong> must be enabled for the app's package and signing certificate.</li>
+  <li><strong>App identity</strong> is shared with production (com.mealawe.app) &mdash; manage versionCodes via EAS remote versioning to avoid install conflicts.</li>
+</ul>
+
+</body>
+</html>

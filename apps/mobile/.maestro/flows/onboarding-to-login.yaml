@@ -1,0 +1,17 @@
+appId: com.mealawe.app
+---
+# Fresh install → 3-slide welcome carousel → Login screen.
+# Purely static text, no auth/network dependency — safe to run standalone.
+# `/` now boots into LocationSplash (real GPS fetch, capped at 4s) before
+# redirecting to /welcome — grant location permission upfront so a true
+# first-run device doesn't stall behind the native OS permission dialog
+# (permission grants persist across `clearState`, so this is a no-op on
+# repeat runs on the same device/emulator).
+- launchApp:
+    clearState: true
+    permissions:
+      location: allow
+- assertVisible: "Get Started"
+- tapOn: "Get Started"
+- assertVisible: "Login"
+- assertVisible: "Enter your mobile number to continue"

@@ -1,0 +1,34 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires authenticated session + serviceable location + at least one plan
+# available for the default/featured category. Assumes app is on (tabs) home,
+# Subscription tab. The flow is now 3 screens deep (Detail -> Plan -> Configure) —
+# meal time (Lunch/Dinner) and the package/duration are chosen on Plan; Configure
+# only covers delivery days, start date, and add-ons. Assumes the featured
+# ("Picked for you") category is not a breakfast-only category (breakfast
+# packages have no Lunch/Dinner toggle — see MealSlot's isBreakfast branch).
+- assertVisible: "Categories"
+- tapOn: "Subscribe"
+# subscription-detail.tsx
+- assertVisible: "Choose plan"
+- tapOn: "Choose plan"
+# subscription-plan.tsx
+- assertVisible: "Choose your plan"
+- assertVisible: "MEAL TIME"
+- tapOn: "Lunch"
+- assertVisible: "Next: set up"
+- tapOn: "Next: set up"
+# subscription-configure.tsx
+- assertVisible: "Customize your plan"
+- assertVisible: "DELIVERY DAYS"
+# Delivery days is read-only here — it's the package's own admin-set
+# "Delivery on Weekends" flag (dashboard's meal-package form), not a user
+# choice, so there's nothing to tap. Assert whichever of the two states this
+# plan actually has (test-data-dependent) via a regex, per this repo's own
+# Maestro convention for data-dependent state (docs/TESTING-WORKFLOW.md).
+- assertVisible: "Delivering (Monday to Friday only|all seven days)"
+- assertVisible: "START DATE"
+- assertVisible: "ADD-ONS"
+- assertVisible: "Review & pay"
+- tapOn: "Review & pay"
+- assertVisible: "Your cart"

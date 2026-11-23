@@ -1,0 +1,30 @@
+{
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "fileSummary": true,
+    "directoryStructure": true,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "topFilesLength": 20
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "android/**",
+      "patches/**",
+      "assets/**",
+      "docs/**/*.pdf",
+      "docs/superpowers/**",
+      "package-lock.json",
+      "google-services.json",
+      "GoogleService-Info.plist",
+      "*.jks"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  }
+}

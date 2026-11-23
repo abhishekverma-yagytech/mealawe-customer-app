@@ -1,0 +1,266 @@
+{
+  "expo": {
+    "name": "Mealawe: Home Food Delivery",
+    "slug": "MealaweUserAppRN",
+    "version": "2.0.2",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "mealaweuserapprn",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.mealawe.app",
+      "appStoreUrl": "https://apps.apple.com/in/app/mealawe-homemade-food-more/id1602148451",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "associatedDomains": [
+        "applinks:mealawe.com"
+      ],
+      "config": {
+        "googleMapsApiKey": "AIzaSyCtIAU1RAa32Y9at1VnmL-fa79AP0NPreQ"
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIBackgroundModes": [
+          "remote-notification"
+        ],
+        "NSFaceIDUsageDescription": "Mealawe uses Face ID to let you unlock the app quickly and securely.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      },
+      "appleTeamId": "9UG32G8N3S"
+    },
+    "android": {
+      "package": "com.mealawe.app",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.mealawe.app",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff",
+        "foregroundImage": "./assets/images/android-icon.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "mealawe.com"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCtIAU1RAa32Y9at1VnmL-fa79AP0NPreQ"
+        }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#30B34A",
+          "dark": {
+            "image": "./assets/images/splash-icon.png",
+            "backgroundColor": "#30B34A"
+          }
+        }
+      ],
+      "expo-secure-store",
+      "expo-video",
+      [
+        "expo-navigation-bar",
+        {
+          "style": "dark",
+          "enforceContrast": false
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Mealawe uses your location to show kitchens and thalis serving your delivery area."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Mealawe uses your photo library to set your profile photo.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ],
+      "hyper-sdk-expo-plugin",
+      [
+        "@react-native-firebase/app",
+        {
+          "ios": {
+            "disableSPM": true
+          }
+        }
+      ],
+      "@react-native-firebase/messaging",
+      "@react-native-firebase/crashlytics",
+      [
+        "smartech-base-expo-plugin",
+        {
+          "ios": {
+            "appId": "a6fe8c8cae98111daae5600714b4c50c",
+            "groupIdentifier": "com.mealawe.app",
+            "autoFetchLocation": true,
+            "useAdvID": true,
+            "isLogEnabled": true,
+            "addTestDevice": false,
+            "smartechNudges": {
+              "smartechNudgesEnabled": false,
+              "appId": "",
+              "appKey": "",
+              "addTestDevice": false,
+              "isLogEnabled": false
+            }
+          },
+          "android": {
+            "smartechMetaData": [
+              {
+                "name": "SMT_APP_ID",
+                "value": "2699cd5e4ada21e96e3f481c8400a433"
+              },
+              {
+                "name": "SMT_IS_AUTO_FETCHED_LOCATION",
+                "value": "1"
+              }
+            ],
+            "smartechNudges": {
+              "smartechNudgesEnabled": false,
+              "addTestDevice": false,
+              "useEncryption": false,
+              "SMARTECH_NUDGE_SDK_VERSION": "",
+              "isLogEnabled": false,
+              "smartechNudgesMetaData": []
+            },
+            "SMARTECH_BASE_SDK_VERSION": "",
+            "isKotlinProject": true,
+            "isLogEnabled": true,
+            "autoFetchLocation": true,
+            "backupXMLFiles": "",
+            "addTestDevice": false
+          },
+          "isNewArchEnabled": true,
+          "deepLinkDelay": 0
+        }
+      ],
+      [
+        "smartech-push-expo-plugin",
+        {
+          "autoAskNotificationPermission": false,
+          "android": {
+            "isKotlinProject": true,
+            "useSmartechFCM": false,
+            "SMARTECH_PUSH_SDK_VERSION": ""
+          },
+          "ios": {
+            "groupIdentifier": "com.mealawe.app",
+            "mode": "development"
+          }
+        }
+      ],
+      "./plugins/withSmartechPushAndroidResources.js",
+      "./plugins/withNotifeeMavenRepo.js",
+      "./plugins/withFirebaseModularHeaders.js",
+      "./plugins/withGradleBuildCache.js",
+      "expo-background-task",
+      [
+        "expo-widgets",
+        {
+          "groupIdentifier": "group.com.mealawe.app",
+          "bundleIdentifier": "com.mealawe.app.widgets",
+          "enablePushNotifications": true,
+          "enableAndroid": true,
+          "widgets": [
+            {
+              "name": "MealaweDeliveryActivity",
+              "displayName": "Delivery Tracking",
+              "description": "Live order status and ETA on your Lock Screen and Dynamic Island while a delivery is on the way.",
+              "ios": {
+                "supportedFamilies": [
+                  "accessoryRectangular",
+                  "accessoryCircular",
+                  "accessoryInline"
+                ]
+              }
+            },
+            {
+              "name": "MealaweOrderWidget",
+              "displayName": "Mealawe Order",
+              "description": "See your latest order status, or reorder your usual, from your home screen.",
+              "ios": {
+                "supportedFamilies": [
+                  "systemSmall",
+                  "systemMedium"
+                ]
+              },
+              "android": {
+                "minWidth": 110,
+                "minHeight": 110
+              }
+            }
+          ]
+        }
+      ],
+      "expo-sharing",
+      "expo-image",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Mealawe uses this to personalize offers and measure how well our promotions are working."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": false
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d2a18b84-3719-437e-8c3d-d8f0a94036cd"
+      },
+      "clientId": "mealwe",
+      "hyperSDKVersion": "2.2.8"
+    },
+    "owner": "yagy-team",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d2a18b84-3719-437e-8c3d-d8f0a94036cd"
+    }
+  }
+}

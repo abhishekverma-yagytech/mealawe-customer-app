@@ -1,0 +1,24 @@
+appId: com.mealawe.app
+---
+# MANUAL: replace with a real staging test account, requires human OTP entry
+# until a fixed-OTP test account exists on the backend. Placeholder phone/OTP
+# below will not pass verifyOTP against the real API.
+# `/` boots into LocationSplash (real GPS fetch) before /welcome — grant
+# location permission upfront, same reasoning as onboarding-to-login.yaml.
+- launchApp:
+    clearState: true
+    permissions:
+      location: allow
+- tapOn: "Get Started"
+- assertVisible: "Mobile Number"
+- tapOn: "10-digit number" # the TextInput itself — "Mobile Number" is a separate label
+- inputText: "9876543210"
+- tapOn: "Send OTP"
+- assertVisible: "Verify OTP"
+- assertVisible: "Change"
+# "Resend OTP" is disabled for the first 30s (resend timer) — not exercised here.
+# 6-box OTP input — Maestro types into the single underlying TextInput.
+- inputText: "000000"
+- assertVisible: "Verify & Continue"
+- tapOn: "Verify & Continue"
+# On success, lands on /register (new user) or /(tabs) (returning user with profile).

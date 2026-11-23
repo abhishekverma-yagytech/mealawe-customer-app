@@ -1,0 +1,131 @@
+{
+  "cli": {
+    "version": ">= 12.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "channel": "staging",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "staging"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "development-ios-simulator": {
+      "extends": "development",
+      "ios": {
+        "simulator": true
+      }
+    },
+    "staging": {
+      "distribution": "internal",
+      "channel": "staging",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "staging"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "staging-preview": {
+      "distribution": "internal",
+      "channel": "staging",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "staging"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "production": {
+      "distribution": "store",
+      "channel": "production",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "production"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "buildConfiguration": "Release"
+      }
+    },
+    "production-preview": {
+      "distribution": "internal",
+      "channel": "production",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_ENV": "production"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": false,
+        "buildConfiguration": "Release"
+      }
+    }
+  },
+  "submit": {
+    "internal": {
+      "android": {
+        "serviceAccountKeyPath": "./play-store-credentials.json",
+        "track": "internal",
+        "releaseStatus": "completed"
+      },
+      "ios": {
+        "ascAppId": "1602148451",
+        "appleTeamId": "9UG32G8N3S",
+        "ascApiKeyPath": "./app-store-connect-api-key.p8",
+        "ascApiKeyId": "Z2UF8T8VH6",
+        "ascApiKeyIssuerId": "1da47ed0-9074-4b88-9ee4-d4849162e056",
+        "groups": ["expo_rn", "App Store Connect Users"]
+      }
+    },
+    "alpha": {
+      "android": {
+        "serviceAccountKeyPath": "./play-store-credentials.json",
+        "track": "alpha",
+        "releaseStatus": "completed"
+      }
+    },
+    "beta": {
+      "android": {
+        "serviceAccountKeyPath": "./play-store-credentials.json",
+        "track": "beta",
+        "releaseStatus": "completed"
+      }
+    },
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "./play-store-credentials.json",
+        "track": "production",
+        "releaseStatus": "completed"
+      },
+      "ios": {
+        "ascAppId": "1602148451",
+        "appleTeamId": "9UG32G8N3S",
+        "ascApiKeyPath": "./app-store-connect-api-key.p8",
+        "ascApiKeyId": "Z2UF8T8VH6",
+        "ascApiKeyIssuerId": "1da47ed0-9074-4b88-9ee4-d4849162e056"
+      }
+    }
+  }
+}

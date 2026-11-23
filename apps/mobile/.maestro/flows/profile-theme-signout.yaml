@@ -1,0 +1,23 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml).
+- assertVisible: "Categories"
+- tapOn: "Open profile" # HomeHeader profile button accessibilityLabel
+- assertVisible: "Manage addresses"
+- assertVisible: "Appearance"
+- tapOn: "Appearance"
+- assertVisible: "Dark"
+- tapOn: "Dark" # sheet stays open — selecting just re-styles the row
+- assertVisible: "Easy on the eyes"
+- back # dismiss the AppSheet
+- assertVisible: "My orders" # back on Profile
+# Pure Veg preference now lives here (moved off the old Home-header pill) —
+# an inline Toggle switch with no text feedback of its own, so this is a
+# smoke check (row still renders/responds), not a state assertion.
+- tapOn: "Pure Veg"
+- assertVisible: "Pure Veg"
+- tapOn: "Sign out"
+- assertVisible: "Sign out?"
+- assertVisible: "You’ll need to log in again to place orders."
+- tapOn: "Sign out" # confirm button inside ConfirmDialog
+- assertVisible: "Get Started" # lands on /welcome, nav stack cleared

@@ -1,0 +1,23 @@
+{
+  "name": "@mealawe/hooks",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@mealawe/api": "*",
+    "@mealawe/core": "*",
+    "@mealawe/state": "*",
+    "react": "19.2.3",
+    "socket.io-client": "^4.8.3"
+  },
+  "devDependencies": {
+    "@mealawe/config": "*",
+    "@types/react": "~19.2.2"
+  }
+}

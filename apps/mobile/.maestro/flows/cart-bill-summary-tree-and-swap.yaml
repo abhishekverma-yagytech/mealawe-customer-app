@@ -1,0 +1,52 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires a cart with a configured subscription item (see
+# subscribe-configure-cart.yaml) whose category has at least one sibling
+# package (for the Other Subscriptions swap) and at least one plan available
+# in that category besides the one already in cart.
+- assertVisible: "Your cart"
+
+# Bill Summary sheet -> nested GST breakdown sheet
+- tapOn: "Total Bill"
+- assertVisible: "Bill Summary"
+- tapOn: "GST & charges"
+- assertVisible: "GST breakdown"
+- assertVisible: "GST on item total"
+- assertVisible: "Total GST"
+# Dismiss each sheet by tapping the dimmed backdrop (top of screen) rather than
+# swiping — AppSheet's BottomSheetBackdrop defaults to pressBehavior: 'close',
+# the actual dismissal mechanism, and a fixed top-of-screen point works
+# regardless of a sheet's height (BillSummarySheet is a fixed 70% snap point,
+# GstBreakdownSheet is dynamically sized and much shorter, so a swipe distance
+# tuned for one would miss the other).
+- tapOn:
+    point: "50%, 5%"
+- assertNotVisible: "GST breakdown"
+- tapOn:
+    point: "50%, 5%"
+- assertNotVisible: "Bill Summary"
+
+# Tree Plantation — inline-expanding card, not a popup
+- assertVisible: "Tree Plantation"
+- tapOn: "Tree Plantation"
+- assertVisible: "Tree Receiver Name"
+- tapOn: "Tree Receiver Name"
+- inputText: "Test Receiver"
+- hideKeyboard
+# Unchecking clears the receiver-name field again (CART-12).
+- tapOn: "Tree Plantation"
+- assertNotVisible: "Tree Receiver Name"
+
+# Other Subscriptions — tap a sibling plan, confirm the replace. PlanCard has
+# no static selector (accessibilityLabel or otherwise) — every visible string
+# on it is dynamic (package name/price/badges) — so this deliberately breaks
+# the "avoid dynamic-string selectors" convention and targets whatever renders
+# immediately below the section heading, which is always the first PlanCard.
+- assertVisible: "OTHER PLANS"
+- tapOn:
+    below: "OTHER PLANS"
+- assertVisible: "Replace your plan?"
+- tapOn: "Replace"
+- assertVisible: "Your cart"
+
+- assertVisible: "Proceed to Pay"

@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+@font-face { font-family: 'Metropolis'; font-weight: 400; font-display: swap; src: url('/fonts/Metropolis-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Metropolis'; font-weight: 700; font-display: swap; src: url('/fonts/Metropolis-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Metropolis'; font-weight: 900; font-display: swap; src: url('/fonts/Metropolis-Black.ttf') format('truetype'); }
+
+/*
+ * Tokens mirror @mealawe/design-tokens (palette.ts / theme.ts) — keep in sync.
+ * DARK is the default; `data-theme="light"` (set from the `mw_theme` cookie before first paint, see
+ * app/layout.tsx and lib/theme.ts) switches to light. The OS colour scheme is deliberately ignored.
+ */
+:root {
+  color-scheme: dark;
+  --background: #1a1a1a;
+  --foreground: #f5f5f0;
+  --card: #2a2a2a;
+  --muted: #323232;
+  --muted-foreground: #94a3a5;
+  --border: #3d3d3d;
+  --primary: #63ab45;
+  --primary-dark: #518937;
+  --primary-foreground: #ffffff;
+  --secondary: #ffca22;
+  --secondary-foreground: #042a33;
+  --accent: #323232;
+  --destructive: #ff6467;
+  --ring: #78bd54;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --background: #f7f8fa;
+  --foreground: #042a33;
+  --card: #ffffff;
+  --muted: #edeff3;
+  --muted-foreground: #6d6d6d;
+  --border: #e5e5e5;
+  --accent: #eae2b7;
+  --destructive: #e62841;
+  --ring: #63ab45;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ring);
+  --color-offer: #ff8a00;
+  --color-plan: #6c5ce7;
+  --color-info: #159aab;
+  --color-location: #2e7df6;
+  --color-reward: #ec4899;
+  --color-food: #f97316;
+  --color-veg: #63ab45;
+  --color-nonveg: #e23744;
+  --color-rating: #f5a623;
+  --font-sans: 'Metropolis', ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 16px;
+}
+
+html { background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
+body { min-height: 100dvh; }
+button, a { -webkit-tap-highlight-color: transparent; }
+
+/* Logo artwork: dark-green "M" for light theme, white "M" for dark (see components/brand/Logo.tsx) */
+.logo-for-light { display: none; }
+.logo-for-dark { display: block; }
+:root[data-theme='light'] .logo-for-light { display: block; }
+:root[data-theme='light'] .logo-for-dark { display: none; }

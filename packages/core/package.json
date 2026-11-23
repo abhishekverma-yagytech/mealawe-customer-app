@@ -1,0 +1,21 @@
+{
+  "name": "@mealawe/core",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@mealawe/design-tokens": "*",
+    "crypto-js": "^4.2.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@mealawe/config": "*",
+    "@types/crypto-js": "^4.2.2"
+  }
+}

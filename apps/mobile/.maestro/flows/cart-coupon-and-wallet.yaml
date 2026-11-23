@@ -1,0 +1,29 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires a cart with a configured subscription item (see
+# subscribe-configure-cart.yaml) and at least one active subscription coupon on the
+# backend for "Have a coupon code?" to have something valid to apply.
+- assertVisible: "Your cart"
+- assertVisible: "Total Bill"
+- tapOn: "Total Bill"
+- assertVisible: "Bill Summary"
+- assertVisible: "To pay"
+# Dismiss the Bill Summary sheet before the coupon steps below, which live on
+# the screen behind it. Tap the dimmed backdrop (top of screen, safely above
+# any sheet's content regardless of its height) rather than swiping — AppSheet's
+# BottomSheetBackdrop defaults to pressBehavior: 'close', so a plain tap there
+# is the actual, geometry-independent dismissal mechanism.
+- tapOn:
+    point: "50%, 5%"
+- assertNotVisible: "Bill Summary"
+- tapOn: "Have a coupon code?"
+- inputText: "WELCOME10"
+- tapOn: "Apply"
+# Applying a valid coupon replaces the coupon-entry block with an "<code> applied" row.
+- assertVisible: "applied"
+- tapOn: "Remove"
+- assertVisible: "Have a coupon code?"
+# Stop here — "Proceed to Pay" now opens JusPay's native payment page, which
+# isn't scripted/asserted against (gateway-owned UI, see CART-05..09 in the
+# catalogue and the JusPay design spec for what happens past this point).
+- assertVisible: "Proceed to Pay"

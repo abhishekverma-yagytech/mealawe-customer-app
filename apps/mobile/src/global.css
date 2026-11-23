@@ -1,0 +1,184 @@
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css";
+@import "nativewind/theme";
+
+/* ─── Mealawe theme: design tokens (light / dark) ─────────────────
+   Brand palette (from design):
+     primary  green   #63AB45 · #518937
+     secondary yellow #FFCA22
+     accent    cream  #EAE2B7
+     deep      teal   #042A33  (dark-mode surface)
+   RGB triples so `rgb(var(--token) / <alpha>)` opacity works.
+   1. :root              — light defaults (all platforms)
+   2. @media dark :root  — dark defaults; nativewind maps this to
+                           Appearance.getColorScheme() on native.
+   3. :root.dark/.light  — higher specificity for web class toggle. */
+@layer theme {
+  :root {
+    --primary: 99 171 69;            /* #63AB45 */
+    --primary-foreground: 255 255 255;
+    --card: 255 255 255;             /* cards stay pure white… */
+    --secondary: 255 202 34;         /* #FFCA22 */
+    --secondary-foreground: 4 42 51; /* #042A33 */
+    --background: 247 248 250;       /* …on a soft off-white page (#F7F8FA) so cards read */
+    --popover: 255 255 255;
+    --popover-foreground: 4 42 51;
+    --muted: 237 239 243;            /* #EDEFF3 — insets/chips distinct from card + bg */
+    --muted-foreground: 109 109 109;
+    --destructive: 230 40 65;        /* #E62841 */
+    --foreground: 4 42 51;           /* #042A33 */
+    --border: 229 229 229;
+    --input: 229 229 229;
+    --ring: 99 171 69;
+    --accent: 234 226 183;           /* #EAE2B7 */
+    --accent-foreground: 4 42 51;
+
+    /* ─── Modern Fresh accents ──────────────────────────────────────
+       Semantic icon/section hues — rendered as a solid icon on a soft
+       (~12%) tint. Fixed (do NOT flip with scheme). Green is reserved
+       for CTAs/selection and lives in --primary, not here. */
+    --accent-offer: 255 138 0;       /* #FF8A00 offers / POPULAR / savings */
+    --accent-plan: 108 92 231;       /* #6C5CE7 plan / duration */
+    --accent-info: 21 154 171;       /* #159AAB delivery slot / time */
+    --accent-location: 46 125 246;   /* #2E7DF6 address / location */
+    --accent-reward: 236 72 153;     /* #EC4899 coupons / wallet */
+    --accent-food: 249 115 22;       /* #F97316 food / menu items */
+    --accent-veg: 99 171 69;         /* #63AB45 veg dot */
+    --accent-nonveg: 226 55 68;      /* #E23744 non-veg dot */
+    --accent-rating: 245 163 35;     /* #F5A623 star / rating */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --primary: 99 171 69;
+      --primary-foreground: 255 255 255;
+      --card: 42 42 42;              /* #2A2A2A — elevated surface, clearly lighter than bg */
+      --secondary: 255 202 34;
+      --secondary-foreground: 4 42 51;
+      --background: 26 26 26;        /* #1A1A1A — soft near-black page, not OLED-pure-black */
+      --popover: 42 42 42;           /* #2A2A2A */
+      --popover-foreground: 245 245 240;
+      --muted: 50 50 50;              /* #323232 — insets/chips a step above card */
+      --muted-foreground: 148 163 165;
+      --destructive: 255 100 103;
+      --foreground: 245 245 240;
+      --border: 61 61 61;            /* #3D3D3D */
+      --input: 61 61 61;
+      --accent: 50 50 50;
+      --accent-foreground: 234 226 183;
+      --ring: 120 189 84;            /* #78BD54 */
+    }
+  }
+
+  :root.dark {
+    --primary: 99 171 69;
+    --primary-foreground: 255 255 255;
+    --card: 42 42 42;
+    --secondary: 255 202 34;
+    --secondary-foreground: 4 42 51;
+    --background: 26 26 26;
+    --popover: 42 42 42;
+    --popover-foreground: 245 245 240;
+    --muted: 50 50 50;
+    --muted-foreground: 148 163 165;
+    --destructive: 255 100 103;
+    --foreground: 245 245 240;
+    --border: 61 61 61;
+    --input: 61 61 61;
+    --accent: 50 50 50;
+    --accent-foreground: 234 226 183;
+    --ring: 120 189 84;
+  }
+
+  :root.light {
+    --primary: 99 171 69;
+    --primary-foreground: 255 255 255;
+    --card: 255 255 255;
+    --secondary: 255 202 34;
+    --secondary-foreground: 4 42 51;
+    --background: 247 248 250;
+    --popover: 255 255 255;
+    --popover-foreground: 4 42 51;
+    --muted: 237 239 243;
+    --muted-foreground: 109 109 109;
+    --destructive: 230 40 65;
+    --foreground: 4 42 51;
+    --border: 229 229 229;
+    --input: 229 229 229;
+    --ring: 99 171 69;
+    --accent: 234 226 183;
+    --accent-foreground: 4 42 51;
+  }
+}
+
+@theme inline {
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-card: rgb(var(--card));
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-foreground: rgb(var(--secondary-foreground));
+  --color-background: rgb(var(--background));
+  --color-popover: rgb(var(--popover));
+  --color-popover-foreground: rgb(var(--popover-foreground));
+  --color-muted: rgb(var(--muted));
+  --color-muted-foreground: rgb(var(--muted-foreground));
+  --color-destructive: rgb(var(--destructive));
+  --color-foreground: rgb(var(--foreground));
+  --color-border: rgb(var(--border));
+  --color-input: rgb(var(--input));
+  --color-ring: rgb(var(--ring));
+  --color-accent: rgb(var(--accent));
+  --color-accent-foreground: rgb(var(--accent-foreground));
+
+  /* Modern Fresh accents → bg-accent-offer/12, text-accent-plan, … */
+  --color-accent-offer: rgb(var(--accent-offer));
+  --color-accent-plan: rgb(var(--accent-plan));
+  --color-accent-info: rgb(var(--accent-info));
+  --color-accent-location: rgb(var(--accent-location));
+  --color-accent-reward: rgb(var(--accent-reward));
+  --color-accent-food: rgb(var(--accent-food));
+  --color-accent-veg: rgb(var(--accent-veg));
+  --color-accent-nonveg: rgb(var(--accent-nonveg));
+  --color-accent-rating: rgb(var(--accent-rating));
+}
+
+/* Fixed brand hues (do not flip) — use when an exact color is required,
+   e.g. bg-brand-green, text-brand-teal, bg-brand-yellow. */
+@theme {
+  --color-brand-green: #63ab45;
+  --color-brand-green-dark: #518937;
+  --color-brand-yellow: #ffca22;
+  --color-brand-cream: #eae2b7;
+  --color-brand-teal: #042a33;
+  --color-success: #63ab45;
+  --color-warning: #ffca22;
+  --color-danger: #e62841;
+
+  /* ─── Typography (Metropolis — Zomato's Okra is built on this same
+     open-source geometric sans; Okra itself is Zomato's own unreleased
+     modification) ─────────────────────────────────────────────────────
+     RN doesn't synthesize weights — each weight is its own family.
+     Utilities: `font-metropolis` / `font-metropolis-bold` / `font-metropolis-black`.
+     Prefer <AppText variant> (src/theme/typography.ts) for full presets. */
+  --font-sans: "Metropolis-Regular", system-ui, sans-serif;
+  --font-metropolis: "Metropolis-Regular", system-ui, sans-serif;
+  --font-metropolis-bold: "Metropolis-Bold", system-ui, sans-serif;
+  --font-metropolis-black: "Metropolis-Black", system-ui, sans-serif;
+
+  /* Zomato Sushi type scale, verbatim: 11/12/13/15/17/19/21/24/27px (mirrors
+     typography.ts) → `text-h1`, `text-body`, … Static baseline only — these
+     Tailwind utilities don't get AppText's runtime responsive scale, so
+     prefer <AppText variant> where practical. */
+  --text-overline: 11px;
+  --text-caption: 12px;
+  --text-body-sm: 13px;
+  --text-body: 13px;
+  --text-label: 14px;
+  --text-body-lg: 15px;
+  --text-title: 17px;
+  --text-h3: 19px;
+  --text-h2: 21px;
+  --text-h1: 24px;
+  --text-display: 27px;
+}

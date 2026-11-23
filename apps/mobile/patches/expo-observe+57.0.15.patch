@@ -1,0 +1,13 @@
+diff --git a/node_modules/expo-observe/ios/ObserveModule.swift b/node_modules/expo-observe/ios/ObserveModule.swift
+index 5b7a398..3ae539b 100644
+--- a/node_modules/expo-observe/ios/ObserveModule.swift
++++ b/node_modules/expo-observe/ios/ObserveModule.swift
+@@ -57,7 +57,7 @@ public final class ObserveModule: Module {
+ 
+       // Broadcast the integrations config so integration libraries (e.g. expo-image) can activate.
+       self.lastIntegrations = config.integrations ?? [:]
+-      self.emit(event: "configure", payload: ["integrations": self.lastIntegrations])
++      self.emit(event: "configure", payload: ["integrations": config.integrations ?? [:]])
+     }
+ 
+     Function("getIntegrations") {

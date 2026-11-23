@@ -1,0 +1,26 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session (see login-otp-flow.yaml). Assumes
+# app is already on the (tabs) home screen. The referral code is lazily
+# generated + persisted to the backend on first visit to this screen (see
+# useReferralCode) — assertVisible's default timeout covers that network
+# round-trip. Stops before "Share Now" (opens the native OS share sheet, an
+# external boundary not scripted here, same convention as JusPay in the cart
+# flows).
+- assertVisible: "Categories"
+- tapOn: "Open profile"
+- assertVisible: "Refer & Earn"
+- tapOn: "Refer & Earn"
+- assertVisible: "Invite friends, earn ₹200"
+- assertVisible: "Your referral code"
+# "Copy" is disabled until the code finishes generating (first-visit network
+# round-trip) — if this taps before that resolves, the tap silently no-ops
+# and the next assertion times out; re-run if that happens (same "real
+# backend, no fixed test double" caveat as the rest of this manual suite).
+- tapOn: "Copy"
+- assertVisible: "Copied!"
+- assertVisible: "Frequently asked"
+- tapOn: "Can I refer multiple friends?"
+- assertVisible: "You’ll receive ₹200 cashback for each friend who places their first order of ₹499 or more."
+- tapOn: "Can I refer multiple friends?" # tap again — collapses the answer
+- assertVisible: "Share Now"

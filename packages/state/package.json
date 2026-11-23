@@ -1,0 +1,21 @@
+{
+  "name": "@mealawe/state",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@mealawe/api": "*",
+    "@mealawe/core": "*",
+    "@mealawe/design-tokens": "*",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@mealawe/config": "*"
+  }
+}

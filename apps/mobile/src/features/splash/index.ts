@@ -1,0 +1,1 @@
+export { SplashAnimationOverlay } from './SplashAnimationOverlay';

@@ -1,0 +1,6 @@
+{
+  "extends": "@mealawe/config/tsconfig.base.json",
+  "include": [
+    "src/**/*.ts"
+  ]
+}

@@ -1,0 +1,12 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session with at least one ongoing
+# subscription order. Assumes app is on /orders with an ACTIVE section visible.
+- assertVisible: "Manage subscription"
+- tapOn: "Manage subscription"
+- assertVisible: "My subscription"
+- assertVisible: "Next 7 days"
+- tapOn: "Pause"
+- assertVisible: "Resume"
+- tapOn: "Resume"
+- assertVisible: "Pause"

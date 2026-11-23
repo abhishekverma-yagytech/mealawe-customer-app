@@ -1,0 +1,22 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session with a serviceable delivery location set
+# (see login-otp-flow.yaml + addresses-manage.yaml). Assumes app is already on the
+# (tabs) home screen, Subscription tab active (the default).
+#
+# The old "Weekly Menu" bottom sheet and the home-header "PURE VEG" pill have
+# both been removed from the app — the weekly menu is now inline on the
+# category Detail screen (a Mon-Sat day strip, no separate sheet), and the
+# global veg-only preference moved to Profile > Preferences > "Pure Veg" (see
+# profile-theme-signout.yaml's sibling PROF-05 coverage, not this flow).
+- assertVisible: "Categories"
+- tapOn: "Subscribe"
+# subscription-detail.tsx — inline day strip + per-screen Veg/Non-veg toggle
+# (screen-local, NOT the same thing as the old global Pure Veg preference).
+- assertVisible: "PICK A DAY"
+- assertVisible: "WEEKLY MENU"
+- tapOn: "Wed"
+- tapOn: "Non-veg"
+- assertVisible: "Veg"
+- tapOn: "Choose plan"
+- assertVisible: "Choose your plan"

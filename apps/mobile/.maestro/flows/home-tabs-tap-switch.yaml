@@ -1,0 +1,17 @@
+appId: com.mealawe.app
+---
+# MANUAL: requires an authenticated session with a serviceable delivery location set
+# (see login-otp-flow.yaml + addresses-manage.yaml). Assumes app is already on the
+# (tabs) home screen, Subscription tab active (the default), and the cluster has both
+# Bulk and Dine In enabled (see HOME-02).
+#
+# Tap-only — the feed pager no longer supports swipe (removed so it stops
+# stealing horizontal gestures from nested horizontal lists, e.g. the On
+# Demand kitchen grid). Every tab switch below is a tap on its pill.
+- assertVisible: "Categories"
+- tapOn: "Bulk"
+- assertVisible: "Bulk order"
+- tapOn: "Dine In"
+- assertVisible: "No delivery charges — dine in at the venue"
+- tapOn: "Subscription"
+- assertVisible: "Categories"

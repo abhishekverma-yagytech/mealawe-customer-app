@@ -1,0 +1,43 @@
+{
+  "name": "mealawe-customer",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "patch-package --patch-dir apps/mobile/patches",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "web": "npm run dev --workspace @mealawe/web",
+    "web:build": "npm run build --workspace @mealawe/web",
+    "web:start": "npm run start --workspace @mealawe/web",
+    "mobile": "npm run start --workspace @mealawe/mobile",
+    "mobile:local": "npm run start:local --workspace @mealawe/mobile",
+    "mobile:staging": "npm run start:staging --workspace @mealawe/mobile",
+    "mobile:prod": "npm run start:prod --workspace @mealawe/mobile",
+    "mobile:clear": "npm run start:clear --workspace @mealawe/mobile",
+    "android": "npm run android --workspace @mealawe/mobile",
+    "android:local": "npm run android:local --workspace @mealawe/mobile",
+    "android:staging": "npm run android:staging --workspace @mealawe/mobile",
+    "android:prod": "npm run android:prod --workspace @mealawe/mobile",
+    "ios": "npm run ios --workspace @mealawe/mobile",
+    "ios:staging": "npm run ios:staging --workspace @mealawe/mobile",
+    "ios:prod": "npm run ios:prod --workspace @mealawe/mobile"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1",
+    "turbo": "^2.5.0",
+    "typescript": "~6.0.3",
+    "vitest": "^3.2.0"
+  },
+  "overrides": {
+    "lightningcss": "1.30.1"
+  },
+  "packageManager": "npm@10.9.8",
+  "dependencies": {
+    "next": "^16.4.6"
+  }
+}

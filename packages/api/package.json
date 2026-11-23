@@ -1,0 +1,21 @@
+{
+  "name": "@mealawe/api",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@mealawe/core": "*",
+    "@mapbox/polyline": "^1.2.1",
+    "geolib": "^3.3.14"
+  },
+  "devDependencies": {
+    "@mealawe/config": "*",
+    "@types/mapbox__polyline": "^1.0.5"
+  }
+}
